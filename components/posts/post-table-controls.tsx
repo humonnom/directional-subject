@@ -64,12 +64,11 @@ export function PostTableControls({
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <Button onClick={onNewPost} className="gap-2">
-          <Plus className="size-4" />
-          새 게시글 작성
+          <Plus className="size-4" />새 게시글 작성
         </Button>
         <div className="flex flex-1 flex-wrap items-center justify-end gap-2">
           <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
             <Input
               placeholder="제목 또는 본문 검색"
               value={search}

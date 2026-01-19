@@ -37,10 +37,7 @@ export function isAuthenticated(): boolean {
   return !!getAuthToken()
 }
 
-async function fetchApi<T>(
-  endpoint: string,
-  options: RequestInit = {},
-): Promise<T> {
+async function fetchApi<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const token = getAuthToken()
   const headers: HeadersInit = {
     'Content-Type': 'application/json',

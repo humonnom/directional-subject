@@ -82,7 +82,7 @@ export function PostTable({
         minSize: 200,
         maxSize: 300,
         cell: ({ row }) => (
-          <span className="font-mono text-xs truncate block">{row.original.id}</span>
+          <span className="block truncate font-mono text-xs">{row.original.id}</span>
         ),
       },
       {
@@ -91,9 +91,7 @@ export function PostTable({
         size: 280,
         minSize: 150,
         maxSize: 500,
-        cell: ({ row }) => (
-          <span className="truncate block">{row.original.title}</span>
-        ),
+        cell: ({ row }) => <span className="block truncate">{row.original.title}</span>,
       },
       {
         accessorKey: 'category',
@@ -186,7 +184,10 @@ export function PostTable({
         onNewPost={onNewPost}
       />
 
-      <div className="rounded-lg border" style={{ width: 'fit-content', maxWidth: '100%', overflowX: 'auto' }}>
+      <div
+        className="rounded-lg border"
+        style={{ width: 'fit-content', maxWidth: '100%', overflowX: 'auto' }}
+      >
         <Table className="w-auto table-fixed" style={{ width: table.getCenterTotalSize() }}>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -197,7 +198,7 @@ export function PostTable({
                     style={{ width: header.getSize() }}
                     className={cn(
                       'relative select-none',
-                      index < headerGroup.headers.length - 1 && 'border-r border-border',
+                      index < headerGroup.headers.length - 1 && 'border-border border-r',
                     )}
                   >
                     {header.isPlaceholder
@@ -208,7 +209,7 @@ export function PostTable({
                         onMouseDown={header.getResizeHandler()}
                         onTouchStart={header.getResizeHandler()}
                         className={cn(
-                          'absolute right-0 top-0 z-20 h-full w-1 cursor-col-resize select-none touch-none',
+                          'absolute top-0 right-0 z-20 h-full w-1 cursor-col-resize touch-none select-none',
                           'bg-border hover:bg-primary/50 transition-colors',
                           header.column.getIsResizing() && 'bg-primary',
                         )}
@@ -233,7 +234,7 @@ export function PostTable({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-32 text-center text-muted-foreground"
+                  className="text-muted-foreground h-32 text-center"
                 >
                   게시글이 없습니다.
                 </TableCell>
@@ -250,7 +251,7 @@ export function PostTable({
                       key={cell.id}
                       style={{ width: cell.column.getSize() }}
                       className={cn(
-                        index < row.getVisibleCells().length - 1 && 'border-r border-border',
+                        index < row.getVisibleCells().length - 1 && 'border-border border-r',
                       )}
                     >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -268,7 +269,7 @@ export function PostTable({
         {isFetchingNextPage && (
           <div className="flex items-center gap-2">
             <Spinner />
-            <span className="text-sm text-muted-foreground">더 불러오는 중...</span>
+            <span className="text-muted-foreground text-sm">더 불러오는 중...</span>
           </div>
         )}
       </div>

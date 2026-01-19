@@ -1,6 +1,6 @@
 'use client'
 
-import React from "react"
+import React from 'react'
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -37,7 +37,7 @@ export default function LoginPage() {
 
     try {
       const response = await login({ email, password })
-      
+
       if (response.token) {
         setAuthToken(response.token)
         checkAuth()
@@ -54,7 +54,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/30 px-4">
+    <div className="bg-muted/30 flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">게시판</CardTitle>

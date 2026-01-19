@@ -1,6 +1,6 @@
 'use client'
 
-import React from "react"
+import React from 'react'
 
 import { useState, useEffect, useCallback } from 'react'
 import { toast } from 'sonner'
@@ -45,12 +45,7 @@ const CATEGORIES: { value: PostCategory; label: string }[] = [
   { value: 'NOTICE', label: '공지' },
 ]
 
-export function PostFormModal({
-  open,
-  onOpenChange,
-  post,
-  onSuccess,
-}: PostFormModalProps) {
+export function PostFormModal({ open, onOpenChange, post, onSuccess }: PostFormModalProps) {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [category, setCategory] = useState<PostCategory>('FREE')
@@ -167,7 +162,7 @@ export function PostFormModal({
               disabled={isLoading}
               aria-invalid={!!titleError}
             />
-            {titleError && <p className="text-sm text-destructive">{titleError}</p>}
+            {titleError && <p className="text-destructive text-sm">{titleError}</p>}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="category" className="text-sm font-medium">
@@ -204,9 +199,9 @@ export function PostFormModal({
               className="resize-none"
               aria-invalid={!!bodyError}
             />
-            {bodyError && <p className="text-sm text-destructive">{bodyError}</p>}
+            {bodyError && <p className="text-destructive text-sm">{bodyError}</p>}
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             다음 단어는 사용할 수 없습니다: {FORBIDDEN_WORDS.join(', ')}
           </p>
           <DialogFooter>
@@ -218,10 +213,7 @@ export function PostFormModal({
             >
               취소
             </Button>
-            <Button
-              type="submit"
-              disabled={isLoading || !!titleError || !!bodyError}
-            >
+            <Button type="submit" disabled={isLoading || !!titleError || !!bodyError}>
               {isLoading ? (
                 <>
                   <Spinner className="mr-2" />

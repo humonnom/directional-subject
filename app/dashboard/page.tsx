@@ -17,13 +17,13 @@ export default function DashboardPage() {
   }, [router])
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="bg-muted/30 min-h-screen">
       <Navbar />
       <main className="mx-auto max-w-7xl px-4 py-6">
         <h1 className="mb-6 text-2xl font-bold">대시보드</h1>
         <Card>
           <CardContent className="flex h-64 flex-col items-center justify-center gap-4">
-            <LayoutDashboard className="size-12 text-muted-foreground" />
+            <LayoutDashboard className="text-muted-foreground size-12" />
             <p className="text-muted-foreground">준비 중입니다.</p>
           </CardContent>
         </Card>

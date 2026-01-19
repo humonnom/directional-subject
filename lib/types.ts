@@ -80,9 +80,9 @@ export function containsForbiddenWord(text: string): string | null {
 export function checkForbiddenWords(title: string, content: string): string | null {
   const titleCheck = containsForbiddenWord(title)
   if (titleCheck) return titleCheck
-  
+
   const contentCheck = containsForbiddenWord(content)
   if (contentCheck) return contentCheck
-  
+
   return null
 }

@@ -68,24 +68,20 @@ export default function PostDetailPage() {
 
   if (!id) {
     return (
-      <div className="min-h-screen bg-muted/30">
+      <div className="bg-muted/30 min-h-screen">
         <Navbar />
         <main className="mx-auto max-w-3xl px-4 py-6">
-          <p className="text-center text-muted-foreground">잘못된 게시글 ID입니다.</p>
+          <p className="text-muted-foreground text-center">잘못된 게시글 ID입니다.</p>
         </main>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="bg-muted/30 min-h-screen">
       <Navbar />
       <main className="mx-auto max-w-3xl px-4 py-6">
-        <Button
-          variant="ghost"
-          onClick={handleBack}
-          className="mb-4 gap-2 text-muted-foreground"
-        >
+        <Button variant="ghost" onClick={handleBack} className="text-muted-foreground mb-4 gap-2">
           <ArrowLeft className="size-4" />
           목록으로
         </Button>
@@ -99,9 +95,7 @@ export default function PostDetailPage() {
         ) : error ? (
           <Card>
             <CardContent className="flex h-64 items-center justify-center">
-              <p className="text-muted-foreground">
-                게시글을 불러오는데 실패했습니다.
-              </p>
+              <p className="text-muted-foreground">게시글을 불러오는데 실패했습니다.</p>
             </CardContent>
           </Card>
         ) : post ? (
@@ -111,12 +105,12 @@ export default function PostDetailPage() {
                 <h1 className="text-2xl font-bold">{post.title}</h1>
                 <div className="mt-4 flex flex-wrap items-center gap-3">
                   <CategoryBadge category={post.category} />
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     {formatDate(post.createdAt)}
                   </span>
                 </div>
                 <Separator className="my-6" />
-                <div className="whitespace-pre-wrap text-foreground leading-relaxed">
+                <div className="text-foreground leading-relaxed whitespace-pre-wrap">
                   {post.body}
                 </div>
               </CardContent>

@@ -50,7 +50,7 @@ export default function PostsPage() {
     (pageIndex: number, previousPageData: PostListResponse | null) => {
       // If no more pages
       if (previousPageData && !previousPageData.nextCursor) return null
-      
+
       return {
         limit: PAGE_SIZE,
         search: debouncedSearch,
@@ -63,22 +63,17 @@ export default function PostsPage() {
     [debouncedSearch, category, sort, order],
   )
 
-  const {
-    data,
-    size,
-    setSize,
-    isLoading,
-    isValidating,
-    mutate,
-  } = useSWRInfinite<PostListResponse>(getKey, (key) =>
-    getPosts({
-      limit: key.limit,
-      search: key.search,
-      category: key.category,
-      sort: key.sort,
-      order: key.order,
-      nextCursor: key.nextCursor,
-    }),
+  const { data, size, setSize, isLoading, isValidating, mutate } = useSWRInfinite<PostListResponse>(
+    getKey,
+    (key) =>
+      getPosts({
+        limit: key.limit,
+        search: key.search,
+        category: key.category,
+        sort: key.sort,
+        order: key.order,
+        nextCursor: key.nextCursor,
+      }),
   )
 
   const posts = data ? data.flatMap((page) => page.items) : []
@@ -113,7 +108,7 @@ export default function PostsPage() {
   }, [mutate])
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="bg-muted/30 min-h-screen">
       <Navbar />
       <main className="mx-auto max-w-7xl px-4 py-6">
         <h1 className="mb-6 text-2xl font-bold">게시판</h1>

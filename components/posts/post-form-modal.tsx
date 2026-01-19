@@ -2,8 +2,9 @@
 
 import React from 'react'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
+import { useForbiddenWordValidation } from '@/lib/hooks/use-forbidden-word-validation'
 import {
   Dialog,
   DialogContent,
@@ -28,7 +29,6 @@ import {
   type PostCategory,
   type CreatePostInput,
   FORBIDDEN_WORDS,
-  containsForbiddenWord,
   checkForbiddenWords,
 } from '@/lib/types'
 import { CATEGORIES } from '@/lib/constants/categories'
@@ -45,8 +45,9 @@ export function PostFormModal({ open, onOpenChange, post, onSuccess }: PostFormM
   const [body, setBody] = useState('')
   const [category, setCategory] = useState<PostCategory>('FREE')
   const [isLoading, setIsLoading] = useState(false)
-  const [titleError, setTitleError] = useState<string | null>(null)
-  const [bodyError, setBodyError] = useState<string | null>(null)
+
+  const titleValidation = useForbiddenWordValidation()
+  const bodyValidation = useForbiddenWordValidation()
 
   const isEditing = !!post
 
@@ -61,39 +62,21 @@ export function PostFormModal({ open, onOpenChange, post, onSuccess }: PostFormM
         setBody('')
         setCategory('FREE')
       }
-      setTitleError(null)
-      setBodyError(null)
+      titleValidation.reset()
+      bodyValidation.reset()
     }
   }, [open, post])
-
-  const validateTitle = useCallback((value: string) => {
-    const forbidden = containsForbiddenWord(value)
-    setTitleError(forbidden ? `금칙어 "${forbidden}"이(가) 포함되어 있습니다.` : null)
-    return !forbidden
-  }, [])
-
-  const validateBody = useCallback((value: string) => {
-    const forbidden = containsForbiddenWord(value)
-    setBodyError(forbidden ? `금칙어 "${forbidden}"이(가) 포함되어 있습니다.` : null)
-    return !forbidden
-  }, [])
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setTitle(value)
-    validateTitle(value)
+    titleValidation.validate(value)
   }
 
   const handleBodyChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value
     setBody(value)
-    validateBody(value)
-  }
-
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value
-    setBody(value)
-    validateBody(value)
+    bodyValidation.validate(value)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -155,9 +138,9 @@ export function PostFormModal({ open, onOpenChange, post, onSuccess }: PostFormM
               value={title}
               onChange={handleTitleChange}
               disabled={isLoading}
-              aria-invalid={!!titleError}
+              aria-invalid={!!titleValidation.error}
             />
-            {titleError && <p className="text-destructive text-sm">{titleError}</p>}
+            {titleValidation.error && <p className="text-destructive text-sm">{titleValidation.error}</p>}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="category" className="text-sm font-medium">
@@ -192,9 +175,9 @@ export function PostFormModal({ open, onOpenChange, post, onSuccess }: PostFormM
               disabled={isLoading}
               rows={10}
               className="resize-none"
-              aria-invalid={!!bodyError}
+              aria-invalid={!!bodyValidation.error}
             />
-            {bodyError && <p className="text-destructive text-sm">{bodyError}</p>}
+            {bodyValidation.error && <p className="text-destructive text-sm">{bodyValidation.error}</p>}
           </div>
           <p className="text-muted-foreground text-xs">
             다음 단어는 사용할 수 없습니다: {FORBIDDEN_WORDS.join(', ')}
@@ -212,7 +195,7 @@ export function PostFormModal({ open, onOpenChange, post, onSuccess }: PostFormM
               type="submit"
               isLoading={isLoading}
               loadingText="저장 중..."
-              disabled={!!titleError || !!bodyError}
+              disabled={!!titleValidation.error || !!bodyValidation.error}
             >
               저장
             </LoadingButton>

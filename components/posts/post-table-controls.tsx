@@ -1,8 +1,8 @@
 'use client'
 
-import { Search, Plus } from 'lucide-react'
-import { Input } from '@/components/ui/input'
+import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { SearchInput } from '@/components/ui/search-input'
 import {
   Select,
   SelectContent,
@@ -61,15 +61,12 @@ export function PostTableControls({
           <Plus className="size-4" />새 게시글 작성
         </Button>
         <div className="flex flex-1 flex-wrap items-center justify-end gap-2">
-          <div className="relative w-full sm:w-64">
-            <Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
-            <Input
-              placeholder="제목 또는 본문 검색"
-              value={search}
-              onChange={(e) => onSearchChange(e.target.value)}
-              className="pl-9"
-            />
-          </div>
+          <SearchInput
+            placeholder="제목 또는 본문 검색"
+            value={search}
+            onChange={(e) => onSearchChange(e.target.value)}
+            containerClassName="w-full sm:w-64"
+          />
           <Select value={category} onValueChange={onCategoryChange}>
             <SelectTrigger className="w-32">
               <SelectValue placeholder="카테고리" />

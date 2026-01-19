@@ -1,7 +1,8 @@
 'use client'
 
-import { useMemo, useCallback, useRef, useEffect, useState } from 'react'
+import { useMemo, useCallback, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useInfiniteScroll } from '@/lib/hooks/use-infinite-scroll'
 import {
   useReactTable,
   getCoreRowModel,
@@ -60,11 +61,14 @@ export function PostTable({
   onDeletePost,
 }: PostTableProps) {
   const router = useRouter()
-  const observerRef = useRef<HTMLDivElement>(null)
-  const fetchNextPageRef = useRef(fetchNextPage)
-  fetchNextPageRef.current = fetchNextPage
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnResizeMode] = useState<ColumnResizeMode>('onChange')
+
+  const { observerRef } = useInfiniteScroll({
+    hasNextPage,
+    isFetching: isFetchingNextPage,
+    fetchNextPage,
+  })
 
   const columns = useMemo<ColumnDef<Post>[]>(
     () => [
@@ -144,24 +148,6 @@ export function PostTable({
     },
     [router],
   )
-
-  // Infinite scroll observer
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-          fetchNextPageRef.current()
-        }
-      },
-      { threshold: 0.1 },
-    )
-
-    if (observerRef.current) {
-      observer.observe(observerRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [hasNextPage, isFetchingNextPage])
 
   return (
     <div className="flex flex-col gap-4">

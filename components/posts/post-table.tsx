@@ -78,37 +78,43 @@ export function PostTable({
       {
         accessorKey: 'id',
         header: 'ID',
-        size: 80,
-        minSize: 60,
-        maxSize: 120,
+        size: 240,
+        minSize: 200,
+        maxSize: 300,
+        cell: ({ row }) => (
+          <span className="font-mono text-xs truncate block">{row.original.id}</span>
+        ),
       },
       {
         accessorKey: 'title',
         header: '제목',
-        size: 300,
+        size: 280,
         minSize: 150,
         maxSize: 500,
+        cell: ({ row }) => (
+          <span className="truncate block">{row.original.title}</span>
+        ),
       },
       {
         accessorKey: 'category',
         header: '카테고리',
-        size: 120,
-        minSize: 100,
-        maxSize: 180,
+        size: 100,
+        minSize: 80,
+        maxSize: 150,
         cell: ({ row }) => <CategoryBadge category={row.original.category} />,
       },
       {
         accessorKey: 'createdAt',
         header: '작성일',
-        size: 120,
+        size: 110,
         minSize: 100,
-        maxSize: 180,
+        maxSize: 150,
         cell: ({ row }) => formatDate(row.original.createdAt),
       },
       {
         id: 'actions',
         header: '액션',
-        size: 80,
+        size: 70,
         minSize: 60,
         maxSize: 100,
         cell: ({ row }) => (
@@ -181,7 +187,7 @@ export function PostTable({
       />
 
       <div className="rounded-lg border" style={{ width: 'fit-content', maxWidth: '100%', overflowX: 'auto' }}>
-        <Table className="w-auto" style={{ width: table.getCenterTotalSize() }}>
+        <Table className="w-auto table-fixed" style={{ width: table.getCenterTotalSize() }}>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -202,8 +208,8 @@ export function PostTable({
                         onMouseDown={header.getResizeHandler()}
                         onTouchStart={header.getResizeHandler()}
                         className={cn(
-                          'absolute -right-0.5 top-0 z-10 h-full w-2 cursor-col-resize select-none touch-none',
-                          'bg-transparent hover:bg-primary/50 transition-colors',
+                          'absolute right-0 top-0 z-20 h-full w-1 cursor-col-resize select-none touch-none',
+                          'bg-border hover:bg-primary/50 transition-colors',
                           header.column.getIsResizing() && 'bg-primary',
                         )}
                       />

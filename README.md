@@ -1,30 +1,12 @@
 # Board CRUD system
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+- 배포 URL: [https://vercel.com/juepark42gmailcoms-projects/v0-board-crud-system](https://vercel.com/juepark42gmailcoms-projects/v0-board-crud-system)
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/juepark42gmailcoms-projects/v0-board-crud-system)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/ttYU5YdmI1Q)
+## 개발 흐름
+- [V0로 초안 퍼블리싱](https://v0.app/chat/ttYU5YdmI1Q)
+  - 리스트 페이지
+  - 상세 페이지
+  - 로그인 페이지
 
-## Overview
-
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
-
-## Deployment
-
-Your project is live at:
-
-**[https://vercel.com/juepark42gmailcoms-projects/v0-board-crud-system](https://vercel.com/juepark42gmailcoms-projects/v0-board-crud-system)**
-
-## Build your app
-
-Continue building your app on:
-
-**[https://v0.app/chat/ttYU5YdmI1Q](https://v0.app/chat/ttYU5YdmI1Q)**
-
-## How It Works
-
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+## 누락된 기능 구현
+- Claude Code, Copilot 보조 도구로 활용

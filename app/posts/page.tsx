@@ -1,32 +1,13 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-import useSWRInfinite from 'swr/infinite'
+import { useState, useCallback } from 'react'
 import { Navbar } from '@/components/layout/navbar'
 import { PostTable } from '@/components/posts/post-table'
 import { PostFormModal } from '@/components/posts/post-form-modal'
 import { DeleteConfirmDialog } from '@/components/posts/delete-confirm-dialog'
-import { getPosts } from '@/lib/api'
 import { useAuthGuard } from '@/lib/hooks/use-auth-guard'
-import type { Post, PostCategory, SortField, SortDirection, PostListResponse } from '@/lib/types'
-
-const PAGE_SIZE = 20
-
-function useDebounce<T>(value: T, delay: number): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value)
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value)
-    }, delay)
-
-    return () => {
-      clearTimeout(handler)
-    }
-  }, [value, delay])
-
-  return debouncedValue
-}
+import { usePostList } from '@/lib/hooks/use-post-list'
+import type { Post, PostCategory, SortField, SortDirection } from '@/lib/types'
 
 export default function PostsPage() {
   useAuthGuard()
@@ -39,45 +20,12 @@ export default function PostsPage() {
   const [editingPost, setEditingPost] = useState<Post | null>(null)
   const [deletePostId, setDeletePostId] = useState<string | null>(null)
 
-  const debouncedSearch = useDebounce(search, 300)
-
-  const getKey = useCallback(
-    (pageIndex: number, previousPageData: PostListResponse | null) => {
-      // If no more pages
-      if (previousPageData && !previousPageData.nextCursor) return null
-
-      return {
-        limit: PAGE_SIZE,
-        search: debouncedSearch,
-        category,
-        sort,
-        order,
-        nextCursor: previousPageData?.nextCursor,
-      }
-    },
-    [debouncedSearch, category, sort, order],
-  )
-
-  const { data, size, setSize, isLoading, isValidating, mutate } = useSWRInfinite<PostListResponse>(
-    getKey,
-    (key) =>
-      getPosts({
-        limit: key.limit,
-        search: key.search,
-        category: key.category,
-        sort: key.sort,
-        order: key.order,
-        nextCursor: key.nextCursor,
-      }),
-  )
-
-  const posts = data ? data.flatMap((page) => page.items) : []
-  const hasNextPage = data ? !!data[data.length - 1]?.nextCursor : false
-  const isFetchingNextPage = isValidating && data && data.length === size
-
-  const handleFetchNextPage = useCallback(() => {
-    setSize((prev) => prev + 1)
-  }, [setSize])
+  const { posts, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, mutate } = usePostList({
+    search,
+    category,
+    sort,
+    order,
+  })
 
   const handleNewPost = useCallback(() => {
     setEditingPost(null)
@@ -110,9 +58,9 @@ export default function PostsPage() {
         <PostTable
           posts={posts}
           isLoading={isLoading}
-          isFetchingNextPage={isFetchingNextPage ?? false}
+          isFetchingNextPage={isFetchingNextPage}
           hasNextPage={hasNextPage}
-          fetchNextPage={handleFetchNextPage}
+          fetchNextPage={fetchNextPage}
           search={search}
           onSearchChange={setSearch}
           category={category}

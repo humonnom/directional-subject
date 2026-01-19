@@ -81,8 +81,8 @@ export default function PostsPage() {
   const isFetchingNextPage = isValidating && data && data.length === size
 
   const handleFetchNextPage = useCallback(() => {
-    setSize(size + 1)
-  }, [setSize, size])
+    setSize((prev) => prev + 1)
+  }, [setSize])
 
   const handleNewPost = useCallback(() => {
     setEditingPost(null)

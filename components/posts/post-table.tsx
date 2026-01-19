@@ -70,6 +70,8 @@ export function PostTable({
 }: PostTableProps) {
   const router = useRouter()
   const observerRef = useRef<HTMLDivElement>(null)
+  const fetchNextPageRef = useRef(fetchNextPage)
+  fetchNextPageRef.current = fetchNextPage
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnResizeMode] = useState<ColumnResizeMode>('onChange')
 
@@ -157,7 +159,7 @@ export function PostTable({
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage()
+          fetchNextPageRef.current()
         }
       },
       { threshold: 0.1 },
@@ -168,7 +170,7 @@ export function PostTable({
     }
 
     return () => observer.disconnect()
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage])
+  }, [hasNextPage, isFetchingNextPage])
 
   return (
     <div className="flex flex-col gap-4">

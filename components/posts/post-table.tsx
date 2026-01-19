@@ -180,16 +180,19 @@ export function PostTable({
         onNewPost={onNewPost}
       />
 
-      <div className="overflow-x-auto rounded-lg border">
-        <Table className="w-full" style={{ minWidth: table.getCenterTotalSize() }}>
+      <div className="rounded-lg border" style={{ width: 'fit-content', maxWidth: '100%', overflowX: 'auto' }}>
+        <Table className="w-auto" style={{ width: table.getCenterTotalSize() }}>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
+                {headerGroup.headers.map((header, index) => (
                   <TableHead
                     key={header.id}
                     style={{ width: header.getSize() }}
-                    className="relative select-none"
+                    className={cn(
+                      'relative select-none',
+                      index < headerGroup.headers.length - 1 && 'border-r border-border',
+                    )}
                   >
                     {header.isPlaceholder
                       ? null
@@ -199,7 +202,8 @@ export function PostTable({
                         onMouseDown={header.getResizeHandler()}
                         onTouchStart={header.getResizeHandler()}
                         className={cn(
-                          'absolute right-0 top-0 h-full w-1 cursor-col-resize select-none touch-none bg-transparent hover:bg-primary/50',
+                          'absolute -right-0.5 top-0 z-10 h-full w-2 cursor-col-resize select-none touch-none',
+                          'bg-transparent hover:bg-primary/50 transition-colors',
                           header.column.getIsResizing() && 'bg-primary',
                         )}
                       />
@@ -235,8 +239,14 @@ export function PostTable({
                   onClick={() => handleRowClick(row.original.id)}
                   className="cursor-pointer"
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} style={{ width: cell.column.getSize() }}>
+                  {row.getVisibleCells().map((cell, index) => (
+                    <TableCell
+                      key={cell.id}
+                      style={{ width: cell.column.getSize() }}
+                      className={cn(
+                        index < row.getVisibleCells().length - 1 && 'border-r border-border',
+                      )}
+                    >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}

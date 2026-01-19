@@ -244,7 +244,11 @@ export function PostTable({
       </div>
 
       {/* Infinite scroll trigger */}
-      <div ref={observerRef} className="flex h-10 items-center justify-center">
+      <div
+        ref={observerRef}
+        className="flex h-10 items-center justify-center"
+        style={{ width: table.getCenterTotalSize() }}
+      >
         {isFetchingNextPage && (
           <div className="flex items-center gap-2">
             <Spinner />

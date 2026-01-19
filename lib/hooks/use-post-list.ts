@@ -64,7 +64,7 @@ export function usePostList({ search, category, sort, order }: UsePostListOption
 
   const posts = data ? data.flatMap((page) => page.items) : []
   const hasNextPage = data ? !!data[data.length - 1]?.nextCursor : false
-  const isFetchingNextPage = isValidating && data && data.length === size
+  const isFetchingNextPage = isValidating && size > 1
 
   const fetchNextPage = useCallback(() => {
     setSize((prev) => prev + 1)

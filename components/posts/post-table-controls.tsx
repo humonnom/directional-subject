@@ -13,6 +13,7 @@ import {
 import { ColumnSettings } from './column-settings'
 import type { Table } from '@tanstack/react-table'
 import type { Post, PostCategory, SortField, SortDirection } from '@/lib/types'
+import { CATEGORIES_WITH_ALL } from '@/lib/constants/categories'
 
 interface PostTableControlsProps {
   table: Table<Post>
@@ -25,13 +26,6 @@ interface PostTableControlsProps {
   onSortChange: (sort: SortField, order: SortDirection) => void
   onNewPost: () => void
 }
-
-const CATEGORIES = [
-  { value: 'ALL', label: '전체' },
-  { value: 'FREE', label: '자유' },
-  { value: 'QNA', label: '질문답변' },
-  { value: 'NOTICE', label: '공지' },
-] as const
 
 type SortOption = `${SortField}_${SortDirection}`
 
@@ -81,7 +75,7 @@ export function PostTableControls({
               <SelectValue placeholder="카테고리" />
             </SelectTrigger>
             <SelectContent>
-              {CATEGORIES.map((cat) => (
+              {CATEGORIES_WITH_ALL.map((cat) => (
                 <SelectItem key={cat.value} value={cat.value}>
                   {cat.label}
                 </SelectItem>

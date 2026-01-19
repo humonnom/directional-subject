@@ -11,7 +11,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { Spinner } from '@/components/ui/spinner'
+import { LoadingButton } from '@/components/ui/loading-button'
 import { deletePost } from '@/lib/api'
 
 interface DeleteConfirmDialogProps {
@@ -60,16 +60,14 @@ export function DeleteConfirmDialog({
           <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isLoading}>
             취소
           </Button>
-          <Button variant="destructive" onClick={handleDelete} disabled={isLoading}>
-            {isLoading ? (
-              <>
-                <Spinner className="mr-2" />
-                삭제 중...
-              </>
-            ) : (
-              '삭제'
-            )}
-          </Button>
+          <LoadingButton
+            variant="destructive"
+            onClick={handleDelete}
+            isLoading={isLoading}
+            loadingText="삭제 중..."
+          >
+            삭제
+          </LoadingButton>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

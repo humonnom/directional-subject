@@ -2,28 +2,24 @@
 
 import React from 'react'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Spinner } from '@/components/ui/spinner'
-import { login, setAuthToken, isAuthenticated } from '@/lib/api'
+import { LoadingButton } from '@/components/ui/loading-button'
+import { login, setAuthToken } from '@/lib/api'
 import { useAuth } from '@/lib/auth-context'
+import { useAuthGuard } from '@/lib/hooks/use-auth-guard'
 
 export default function LoginPage() {
+  useAuthGuard({ requireAuth: false, redirectTo: '/posts' })
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { checkAuth } = useAuth()
-
-  useEffect(() => {
-    if (isAuthenticated()) {
-      router.replace('/posts')
-    }
-  }, [router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -90,16 +86,14 @@ export default function LoginPage() {
                 autoComplete="current-password"
               />
             </div>
-            <Button type="submit" className="mt-2 w-full" disabled={isLoading}>
-              {isLoading ? (
-                <>
-                  <Spinner className="mr-2" />
-                  로그인 중...
-                </>
-              ) : (
-                '로그인'
-              )}
-            </Button>
+            <LoadingButton
+              type="submit"
+              className="mt-2 w-full"
+              isLoading={isLoading}
+              loadingText="로그인 중..."
+            >
+              로그인
+            </LoadingButton>
           </form>
         </CardContent>
       </Card>

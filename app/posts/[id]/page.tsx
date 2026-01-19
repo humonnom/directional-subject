@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import useSWR from 'swr'
 import { ArrowLeft, Pencil, Trash2 } from 'lucide-react'
@@ -12,32 +12,19 @@ import { Separator } from '@/components/ui/separator'
 import { CategoryBadge } from '@/components/posts/category-badge'
 import { PostFormModal } from '@/components/posts/post-form-modal'
 import { DeleteConfirmDialog } from '@/components/posts/delete-confirm-dialog'
-import { getPost, isAuthenticated } from '@/lib/api'
+import { getPost } from '@/lib/api'
+import { useAuthGuard } from '@/lib/hooks/use-auth-guard'
 import type { Post } from '@/lib/types'
-
-function formatDate(dateString: string) {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  })
-}
+import { formatDate } from '@/lib/utils'
 
 export default function PostDetailPage() {
+  useAuthGuard()
+
   const params = useParams()
   const id = params.id as string
   const router = useRouter()
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
-
-  useEffect(() => {
-    if (!isAuthenticated()) {
-      router.replace('/login')
-    }
-  }, [router])
 
   const {
     data: post,
@@ -106,7 +93,7 @@ export default function PostDetailPage() {
                 <div className="mt-4 flex flex-wrap items-center gap-3">
                   <CategoryBadge category={post.category} />
                   <span className="text-muted-foreground text-sm">
-                    {formatDate(post.createdAt)}
+                    {formatDate(post.createdAt, 'long')}
                   </span>
                 </div>
                 <Separator className="my-6" />

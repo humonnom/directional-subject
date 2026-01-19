@@ -1,13 +1,13 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
 import useSWRInfinite from 'swr/infinite'
 import { Navbar } from '@/components/layout/navbar'
 import { PostTable } from '@/components/posts/post-table'
 import { PostFormModal } from '@/components/posts/post-form-modal'
 import { DeleteConfirmDialog } from '@/components/posts/delete-confirm-dialog'
-import { getPosts, isAuthenticated } from '@/lib/api'
+import { getPosts } from '@/lib/api'
+import { useAuthGuard } from '@/lib/hooks/use-auth-guard'
 import type { Post, PostCategory, SortField, SortDirection, PostListResponse } from '@/lib/types'
 
 const PAGE_SIZE = 20
@@ -29,7 +29,8 @@ function useDebounce<T>(value: T, delay: number): T {
 }
 
 export default function PostsPage() {
-  const router = useRouter()
+  useAuthGuard()
+
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState<PostCategory | 'ALL'>('ALL')
   const [sort, setSort] = useState<SortField>('createdAt')
@@ -39,12 +40,6 @@ export default function PostsPage() {
   const [deletePostId, setDeletePostId] = useState<string | null>(null)
 
   const debouncedSearch = useDebounce(search, 300)
-
-  useEffect(() => {
-    if (!isAuthenticated()) {
-      router.replace('/login')
-    }
-  }, [router])
 
   const getKey = useCallback(
     (pageIndex: number, previousPageData: PostListResponse | null) => {

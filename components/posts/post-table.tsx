@@ -11,7 +11,7 @@ import {
   type ColumnResizeMode,
 } from '@tanstack/react-table'
 import { Trash2 } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn, formatDate } from '@/lib/utils'
 import {
   Table,
   TableBody,
@@ -41,15 +41,6 @@ interface PostTableProps {
   onSortChange: (sort: SortField, order: SortDirection) => void
   onNewPost: () => void
   onDeletePost: (id: string) => void
-}
-
-function formatDate(dateString: string) {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  })
 }
 
 export function PostTable({

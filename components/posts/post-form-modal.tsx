@@ -12,6 +12,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import { LoadingButton } from '@/components/ui/loading-button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import {
@@ -21,7 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Spinner } from '@/components/ui/spinner'
 import { createPost, updatePost } from '@/lib/api'
 import {
   type Post,
@@ -31,6 +31,7 @@ import {
   containsForbiddenWord,
   checkForbiddenWords,
 } from '@/lib/types'
+import { CATEGORIES } from '@/lib/constants/categories'
 
 interface PostFormModalProps {
   open: boolean
@@ -38,12 +39,6 @@ interface PostFormModalProps {
   post?: Post | null
   onSuccess: () => void
 }
-
-const CATEGORIES: { value: PostCategory; label: string }[] = [
-  { value: 'FREE', label: '자유' },
-  { value: 'QNA', label: '질문답변' },
-  { value: 'NOTICE', label: '공지' },
-]
 
 export function PostFormModal({ open, onOpenChange, post, onSuccess }: PostFormModalProps) {
   const [title, setTitle] = useState('')
@@ -213,16 +208,14 @@ export function PostFormModal({ open, onOpenChange, post, onSuccess }: PostFormM
             >
               취소
             </Button>
-            <Button type="submit" disabled={isLoading || !!titleError || !!bodyError}>
-              {isLoading ? (
-                <>
-                  <Spinner className="mr-2" />
-                  저장 중...
-                </>
-              ) : (
-                '저장'
-              )}
-            </Button>
+            <LoadingButton
+              type="submit"
+              isLoading={isLoading}
+              loadingText="저장 중..."
+              disabled={!!titleError || !!bodyError}
+            >
+              저장
+            </LoadingButton>
           </DialogFooter>
         </form>
       </DialogContent>

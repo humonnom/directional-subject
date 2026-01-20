@@ -10,9 +10,8 @@ import { DoughnutChart } from '../charts/doughnut-chart'
 export function SnackBrandsSection() {
   const { data, error, isLoading } = useSWR('popular-snack-brands', getPopularSnackBrands)
 
-  const labels = data?.items.map(item => item.brand) ?? []
-  const counts = data?.items.map(item => item.count) ?? []
-  const total = data?.total ?? counts.reduce((a, b) => a + b, 0)
+  const labels = data?.map(item => item.brand) ?? []
+  const counts = data?.map(item => item.count) ?? []
 
   const barChartData = {
     labels,
@@ -44,7 +43,7 @@ export function SnackBrandsSection() {
           <BarChart data={barChartData} />
         </ChartCard>
         <ChartCard title="Doughnut Chart" isLoading={isLoading} error={error?.message}>
-          <DoughnutChart data={doughnutData} centerText={total} />
+          <DoughnutChart data={doughnutData} centerText={0} />
         </ChartCard>
       </div>
     </section>

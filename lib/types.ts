@@ -105,7 +105,7 @@ export interface PopularSnackBrandItem {
   share: number
 }
 
-export type PopularSnackBrandsResponse = PopularSnackBrandItem[];
+export type PopularSnackBrandsResponse = PopularSnackBrandItem[]
 
 // Top Coffee Brands
 export interface TopCoffeeBrandItem {
@@ -123,10 +123,10 @@ export interface WeeklyWorkoutItem {
   running: number
 }
 
-export type WeeklyWorkoutTrendResponse = WeeklyWorkoutItem[];
+export type WeeklyWorkoutTrendResponse = WeeklyWorkoutItem[]
 
 // Coffee Consumption
-export type CoffeeTeam = 'FE' | 'BE' | 'iOS' | 'Android' | 'Data' | 'QA' | 'Ops'
+export type CoffeeTeam = ''
 
 export interface CoffeeDataPoint {
   date: string
@@ -143,18 +143,17 @@ export interface CoffeeConsumptionResponse {
 }
 
 // Snack Impact
-export type SnackImpactDepartment = 'Design' | 'FE' | 'BE' | 'QA' | 'PM' | 'Ops' | 'Data'
-
 export interface SnackImpactDataPoint {
-  date: string
-  satisfaction: number
-  productivity: number
-  stress: number
+  snacks: number
+  meetingsMissed: number
+  morale: number
 }
 
+export type DepartmentName = 'Marketing' | 'HR' | 'Sales'
+
 export interface SnackImpactResponse {
-  series: Array<{
-    department: SnackImpactDepartment
-    data: SnackImpactDataPoint[]
-  }>
+  departments: {
+    name: DepartmentName
+    metrics: SnackImpactDataPoint[]
+  }[]
 }

@@ -24,7 +24,7 @@ ChartJS.register(
   Filler,
   Title,
   Tooltip,
-  Legend
+  Legend,
 )
 
 export const CHART_COLORS = {
@@ -32,22 +32,16 @@ export const CHART_COLORS = {
   happy: '#22c55e',
   stressed: '#f59e0b',
   tired: '#ef4444',
-  
+
   // Workout colors
   running: '#3b82f6',
   cycling: '#f97316',
   stretching: '#a855f7',
-  
-  // Team colors
-  FE: '#3b82f6',
-  BE: '#10b981',
-  iOS: '#f59e0b',
-  Android: '#84cc16',
-  Data: '#8b5cf6',
-  QA: '#ec4899',
-  Ops: '#06b6d4',
-  Design: '#f43f5e',
-  PM: '#6366f1',
+
+  // Department colors
+  HR: '#3b82f6',
+  Sales: '#10b981',
+  Marketing: '#f59e0b',
 }
 
 export const BRAND_COLORS = [
@@ -66,7 +60,7 @@ export const BRAND_COLORS = [
 export function convertToPercentage(data: number[]): number[] {
   const total = data.reduce((sum, val) => sum + val, 0)
   if (total === 0) return data.map(() => 0)
-  return data.map(val => (val / total) * 100)
+  return data.map((val) => (val / total) * 100)
 }
 
 export function formatDate(dateString: string): string {

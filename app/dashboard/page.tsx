@@ -26,10 +26,13 @@ export default function DashboardPage() {
       <main className="mx-auto max-w-7xl px-4 py-6">
         <h1 className="mb-6 text-2xl font-bold">Data Visualization Dashboard</h1>
         <div className="space-y-8">
+          /* Brand */
           <CoffeeBrandsSection/>
           <SnackBrandsSection />
+          /* Weekly Trend */
           <MoodTrendSection />
           <WorkoutTrendSection />
+          /*  */
           {/*<CoffeeConsumptionSection />*/}
           {/*<SnackImpactSection />*/}
         </div>

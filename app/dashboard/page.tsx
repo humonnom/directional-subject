@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { BrandTab } from '@/components/dashboard/tabs/brand-tab'
 import { WeeklyTrendTab } from '@/components/dashboard/tabs/weekly-trend-tab'
 import { SnackImpactTab } from '@/components/dashboard/tabs/snack-impact-tab'
+import { CoffeeConsumptionTab } from '@/components/dashboard/tabs/coffee-consumption-tab'
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -27,7 +28,8 @@ export default function DashboardPage() {
           <TabsList>
             <TabsTrigger value="brand">Brand</TabsTrigger>
             <TabsTrigger value="weekly">Weekly Trend</TabsTrigger>
-            <TabsTrigger value="snack-impact">Snack Impact</TabsTrigger>
+            <TabsTrigger value="coffee">Coffee Consumption</TabsTrigger>
+            <TabsTrigger value="snack">Snack Impact</TabsTrigger>
           </TabsList>
           <TabsContent value="brand" className="pt-4">
             <BrandTab />
@@ -35,7 +37,10 @@ export default function DashboardPage() {
           <TabsContent value="weekly" className="pt-4">
             <WeeklyTrendTab />
           </TabsContent>
-          <TabsContent value="snack-impact" className="pt-4">
+          <TabsContent value="coffee" className="pt-4">
+            <CoffeeConsumptionTab />
+          </TabsContent>
+          <TabsContent value="snack" className="pt-4">
             <SnackImpactTab />
           </TabsContent>
         </Tabs>

@@ -126,19 +126,18 @@ export interface WeeklyWorkoutItem {
 export type WeeklyWorkoutTrendResponse = WeeklyWorkoutItem[]
 
 // Coffee Consumption
-export type CoffeeTeam = ''
+export type CoffeeTeam = 'AI' | 'Frontend' | 'Backend'
 
 export interface CoffeeDataPoint {
-  date: string
   cups: number
   bugs: number
   productivity: number
 }
 
 export interface CoffeeConsumptionResponse {
-  series: Array<{
+  teams: Array<{
     team: CoffeeTeam
-    data: CoffeeDataPoint[]
+    series: CoffeeDataPoint[]
   }>
 }
 
@@ -152,8 +151,8 @@ export interface SnackImpactDataPoint {
 export type DepartmentName = 'Marketing' | 'HR' | 'Sales'
 
 export interface SnackImpactResponse {
-  departments: {
+  departments: Array<{
     name: DepartmentName
     metrics: SnackImpactDataPoint[]
-  }[]
+  }>
 }

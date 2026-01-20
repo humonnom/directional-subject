@@ -1,6 +1,5 @@
 'use client'
 
-import useSWR from 'swr'
 import { BRAND_COLORS } from '@/lib/chart-setup'
 import { ChartCard } from '../chart-card'
 import { BarChart } from '../charts/bar-chart'
@@ -8,21 +7,21 @@ import { DoughnutChart } from '../charts/doughnut-chart'
 
 interface BrandChartSectionProps<T> {
   title: string
-  swrKey: string
-  fetcher: () => Promise<T[]>
+  data: T[] | undefined
+  isLoading: boolean
+  error: Error | undefined
   getLabel: (item: T) => string
   getValue: (item: T) => number
 }
 
 export function BrandChartSection<T>({
   title,
-  swrKey,
-  fetcher,
+  data,
+  isLoading,
+  error,
   getLabel,
   getValue,
 }: BrandChartSectionProps<T>) {
-  const { data, error, isLoading } = useSWR(swrKey, fetcher)
-
   const labels = data?.map(getLabel) ?? []
   const counts = data?.map(getValue) ?? []
 

@@ -55,7 +55,7 @@ export function BrandChartSection<T>({
           <BarChart data={barChartData} />
         </ChartCard>
         <ChartCard title="Doughnut Chart" isLoading={isLoading} error={error?.message}>
-          <DoughnutChart data={doughnutData} centerText={data?.length} />
+          <DoughnutChart data={doughnutData} />
         </ChartCard>
       </div>
     </section>

@@ -1,48 +1,76 @@
 'use client'
 
+import { useRef, useMemo } from 'react'
 import { Doughnut } from 'react-chartjs-2'
-import type { ChartData, ChartOptions } from 'chart.js'
+import type { ChartData, ChartOptions, Chart } from 'chart.js'
 import '@/lib/chart-setup'
+import { Legend, buildIndexedLegendItems, useLegendState } from './chart-legend'
 
 interface DoughnutChartProps {
   data: ChartData<'doughnut'>
   options?: ChartOptions<'doughnut'>
-  centerText?: string | number
 }
 
-export function DoughnutChart({ data, options, centerText }: DoughnutChartProps) {
+export function DoughnutChart({ data, options }: DoughnutChartProps) {
+  const chartRef = useRef<Chart<'doughnut'>>(null)
+
+  const initialItems = useMemo(
+    () => buildIndexedLegendItems(data.labels ?? [], data.datasets[0]?.backgroundColor as string[]),
+    [data.labels, data.datasets]
+  )
+
+  const { items, updateOverride } = useLegendState(initialItems)
+
+  const handleToggleVisibility = (index: number) => {
+    const chart = chartRef.current
+    if (!chart) return
+
+    const meta = chart.getDatasetMeta(0)
+    if (meta.data[index]) {
+      const element = meta.data[index] as unknown as { hidden: boolean }
+      const isHidden = element.hidden ?? false
+      element.hidden = !isHidden
+      chart.update()
+      updateOverride(index, { hidden: !isHidden })
+    }
+  }
+
+  const handleColorChange = (index: number, color: string) => {
+    const chart = chartRef.current
+    if (!chart) return
+
+    const dataset = chart.data.datasets[0]
+    if (dataset && Array.isArray(dataset.backgroundColor)) {
+      (dataset.backgroundColor as string[])[index] = color
+      chart.update()
+    }
+    updateOverride(index, { color })
+  }
+
   const defaultOptions: ChartOptions<'doughnut'> = {
     responsive: true,
     maintainAspectRatio: false,
     cutout: '65%',
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: {
-          usePointStyle: true,
-          padding: 16,
-        },
-      },
-    },
+    plugins: { legend: { display: false } },
   }
 
   const mergedOptions = {
     ...defaultOptions,
     ...options,
-    plugins: {
-      ...defaultOptions.plugins,
-      ...options?.plugins,
-    },
+    plugins: { ...defaultOptions.plugins, ...options?.plugins },
   }
 
   return (
-    <div className="relative h-64">
-      <Doughnut data={data} options={mergedOptions} />
-      {centerText !== undefined && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <span className="text-2xl font-bold">{centerText}</span>
-        </div>
-      )}
+    <div>
+      <div className="h-56">
+        <Doughnut ref={chartRef} data={data} options={mergedOptions} />
+      </div>
+      <Legend
+        items={items}
+        onToggleVisibility={handleToggleVisibility}
+        onColorChange={handleColorChange}
+        shape="circle"
+      />
     </div>
   )
 }

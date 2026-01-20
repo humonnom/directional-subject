@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, type ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import { isAuthenticated, removeAuthToken } from './api'
 
@@ -14,19 +14,13 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState(() => isAuthenticated())
+  const [isLoading] = useState(false)
   const router = useRouter()
 
   const checkAuth = useCallback(() => {
-    const authenticated = isAuthenticated()
-    setIsLoggedIn(authenticated)
-    setIsLoading(false)
+    setIsLoggedIn(isAuthenticated())
   }, [])
-
-  useEffect(() => {
-    checkAuth()
-  }, [checkAuth])
 
   const logout = useCallback(() => {
     removeAuthToken()

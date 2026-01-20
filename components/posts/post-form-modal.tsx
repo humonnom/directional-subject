@@ -65,6 +65,7 @@ export function PostFormModal({ open, onOpenChange, post, onSuccess }: PostFormM
       titleValidation.reset()
       bodyValidation.reset()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, post])
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

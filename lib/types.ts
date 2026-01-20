@@ -101,8 +101,8 @@ export type WeeklyMoodTrendResponse = WeeklyMoodItem[]
 
 // Popular Snack Brands
 export interface PopularSnackBrandItem {
-  brand: string
-  count: number
+  name: string
+  share: number
 }
 
 export type PopularSnackBrandsResponse = PopularSnackBrandItem[];

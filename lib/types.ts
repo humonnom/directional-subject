@@ -93,8 +93,8 @@ export function checkForbiddenWords(title: string, content: string): string | nu
 export interface WeeklyMoodItem {
   week: string
   happy: number
-  neutral: number
-  sad: number
+  stressed: number
+  tired: number
 }
 
 export type WeeklyMoodTrendResponse = WeeklyMoodItem[]
@@ -123,9 +123,7 @@ export interface WeeklyWorkoutItem {
   yoga: number
 }
 
-export interface WeeklyWorkoutTrendResponse {
-  items: WeeklyWorkoutItem[]
-}
+export type WeeklyWorkoutTrendResponse = WeeklyWorkoutItem[];
 
 // Coffee Consumption
 export type CoffeeTeam = 'FE' | 'BE' | 'iOS' | 'Android' | 'Data' | 'QA' | 'Ops'

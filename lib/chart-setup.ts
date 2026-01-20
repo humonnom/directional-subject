@@ -30,8 +30,8 @@ ChartJS.register(
 export const CHART_COLORS = {
   // Mood colors
   happy: '#22c55e',
-  neutral: '#f59e0b',
-  sad: '#ef4444',
+  stressed: '#f59e0b',
+  tired: '#ef4444',
   
   // Workout colors
   cardio: '#3b82f6',

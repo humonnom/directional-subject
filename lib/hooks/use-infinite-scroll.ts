@@ -17,7 +17,10 @@ export function useInfiniteScroll({
 }: UseInfiniteScrollOptions) {
   const observerRef = useRef<HTMLDivElement>(null)
   const fetchNextPageRef = useRef(fetchNextPage)
-  fetchNextPageRef.current = fetchNextPage
+
+  useEffect(() => {
+    fetchNextPageRef.current = fetchNextPage
+  }, [fetchNextPage])
 
   useEffect(() => {
     const observer = new IntersectionObserver(

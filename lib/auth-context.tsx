@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react'
+import { createContext, useContext, useCallback, useSyncExternalStore, type ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import { isAuthenticated, removeAuthToken } from './api'
 
@@ -13,24 +13,26 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null)
 
+const emptySubscribe = () => () => {}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const isMounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  )
+
   const router = useRouter()
 
-  const checkAuth = useCallback(() => {
-    const authenticated = isAuthenticated()
-    setIsLoggedIn(authenticated)
-    setIsLoading(false)
-  }, [])
+  const isLoggedIn = isMounted ? isAuthenticated() : false
+  const isLoading = !isMounted
 
-  useEffect(() => {
-    checkAuth()
-  }, [checkAuth])
+  const checkAuth = useCallback(() => {
+    // Force re-render by router refresh if needed
+  }, [])
 
   const logout = useCallback(() => {
     removeAuthToken()
-    setIsLoggedIn(false)
     router.push('/login')
   }, [router])
 

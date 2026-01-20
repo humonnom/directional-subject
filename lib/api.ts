@@ -6,6 +6,12 @@ import type {
   LoginInput,
   LoginResponse,
   PostFilters,
+  WeeklyMoodTrendResponse,
+  PopularSnackBrandsResponse,
+  TopCoffeeBrandsResponse,
+  WeeklyWorkoutTrendResponse,
+  CoffeeConsumptionResponse,
+  SnackImpactResponse,
 } from './types'
 
 const API_BASE_URL = 'https://fe-hiring-rest-api.vercel.app'
@@ -137,6 +143,30 @@ export async function deletePost(id: string): Promise<void> {
   return fetchApi<void>(`/posts/${id}`, {
     method: 'DELETE',
   })
+}
+
+export async function getWeeklyMoodTrend(): Promise<WeeklyMoodTrendResponse> {
+  return fetchApi<WeeklyMoodTrendResponse>('/mock/weekly-mood-trend')
+}
+
+export async function getPopularSnackBrands(): Promise<PopularSnackBrandsResponse> {
+  return fetchApi<PopularSnackBrandsResponse>('/mock/popular-snack-brands')
+}
+
+export async function getTopCoffeeBrands(): Promise<TopCoffeeBrandsResponse> {
+  return fetchApi<TopCoffeeBrandsResponse>('/mock/top-coffee-brands')
+}
+
+export async function getWeeklyWorkoutTrend(): Promise<WeeklyWorkoutTrendResponse> {
+  return fetchApi<WeeklyWorkoutTrendResponse>('/mock/weekly-workout-trend')
+}
+
+export async function getCoffeeConsumption(): Promise<CoffeeConsumptionResponse> {
+  return fetchApi<CoffeeConsumptionResponse>('/mock/coffee-consumption')
+}
+
+export async function getSnackImpact(): Promise<SnackImpactResponse> {
+  return fetchApi<SnackImpactResponse>('/mock/snack-impact')
 }
 
 export { ApiError }

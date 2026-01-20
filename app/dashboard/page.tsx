@@ -3,9 +3,12 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Navbar } from '@/components/layout/navbar'
-import { Card, CardContent } from '@/components/ui/card'
 import { isAuthenticated } from '@/lib/api'
-import { LayoutDashboard } from 'lucide-react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { BrandTab } from '@/components/dashboard/tabs/brand-tab'
+import { WeeklyTrendTab } from '@/components/dashboard/tabs/weekly-trend-tab'
+import { SnackImpactTab } from '@/components/dashboard/tabs/snack-impact-tab'
+import { CoffeeConsumptionTab } from '@/components/dashboard/tabs/coffee-consumption-tab'
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -17,16 +20,30 @@ export default function DashboardPage() {
   }, [router])
 
   return (
-    <div className="bg-muted/30 min-h-screen">
+    <div className="min-h-screen bg-muted/30">
       <Navbar />
       <main className="mx-auto max-w-7xl px-4 py-6">
-        <h1 className="mb-6 text-2xl font-bold">대시보드</h1>
-        <Card>
-          <CardContent className="flex h-64 flex-col items-center justify-center gap-4">
-            <LayoutDashboard className="text-muted-foreground size-12" />
-            <p className="text-muted-foreground">준비 중입니다.</p>
-          </CardContent>
-        </Card>
+        <h1 className="mb-6 text-2xl font-bold">Data Visualization Dashboard</h1>
+        <Tabs defaultValue="brand">
+          <TabsList>
+            <TabsTrigger value="brand">Brand</TabsTrigger>
+            <TabsTrigger value="weekly">Weekly Trend</TabsTrigger>
+            <TabsTrigger value="coffee">Coffee Consumption</TabsTrigger>
+            <TabsTrigger value="snack">Snack Impact</TabsTrigger>
+          </TabsList>
+          <TabsContent value="brand" className="pt-4">
+            <BrandTab />
+          </TabsContent>
+          <TabsContent value="weekly" className="pt-4">
+            <WeeklyTrendTab />
+          </TabsContent>
+          <TabsContent value="coffee" className="pt-4">
+            <CoffeeConsumptionTab />
+          </TabsContent>
+          <TabsContent value="snack" className="pt-4">
+            <SnackImpactTab />
+          </TabsContent>
+        </Tabs>
       </main>
     </div>
   )

@@ -86,3 +86,73 @@ export function checkForbiddenWords(title: string, content: string): string | nu
 
   return null
 }
+
+// Mock API Types
+
+// Weekly Mood Trend
+export interface WeeklyMoodItem {
+  week: string
+  happy: number
+  stressed: number
+  tired: number
+}
+
+export type WeeklyMoodTrendResponse = WeeklyMoodItem[]
+
+// Popular Snack Brands
+export interface PopularSnackBrandItem {
+  name: string
+  share: number
+}
+
+export type PopularSnackBrandsResponse = PopularSnackBrandItem[]
+
+// Top Coffee Brands
+export interface TopCoffeeBrandItem {
+  brand: string
+  popularity: number
+}
+
+export type TopCoffeeBrandsResponse = TopCoffeeBrandItem[]
+
+// Weekly Workout Trend
+export interface WeeklyWorkoutItem {
+  week: string
+  stretching: number
+  cycling: number
+  running: number
+}
+
+export type WeeklyWorkoutTrendResponse = WeeklyWorkoutItem[]
+
+// Coffee Consumption
+export type CoffeeTeam = 'AI' | 'Frontend' | 'Backend'
+
+export interface CoffeeDataPoint {
+  cups: number
+  bugs: number
+  productivity: number
+}
+
+export interface CoffeeConsumptionResponse {
+  teams: Array<{
+    team: CoffeeTeam
+    series: CoffeeDataPoint[]
+  }>
+}
+
+// Snack Impact
+export interface SnackImpactDataPoint {
+  snacks: number
+  meetingsMissed: number
+  morale: number
+}
+
+export type DepartmentName = 'Marketing' | 'HR' | 'Sales'
+
+export interface SnackImpactResponse {
+  departments: Array<{
+    name: DepartmentName
+    metrics: SnackImpactDataPoint[]
+  }>
+}

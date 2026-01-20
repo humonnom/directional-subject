@@ -10,15 +10,15 @@ import { AreaChart } from '../charts/area-chart'
 export function WorkoutTrendSection() {
   const { data, error, isLoading } = useSWR('weekly-workout-trend', getWeeklyWorkoutTrend)
 
-  const labels = data?.items.map(item => formatDate(item.week)) ?? []
+  const labels = data?.map(item => formatDate(item.week)) ?? []
   
   // Percentage data for stacked charts
-  const percentageData = data?.items.map(item => {
-    const total = item.cardio + item.strength + item.yoga
+  const percentageData = data?.map(item => {
+    const total = item.running + item.cycling + item.stretching
     return {
-      cardio: total ? (item.cardio / total) * 100 : 0,
-      strength: total ? (item.strength / total) * 100 : 0,
-      yoga: total ? (item.yoga / total) * 100 : 0,
+      running: total ? (item.running / total) * 100 : 0,
+      cycling: total ? (item.cycling / total) * 100 : 0,
+      stretching: total ? (item.stretching / total) * 100 : 0,
     }
   }) ?? []
 
@@ -26,19 +26,19 @@ export function WorkoutTrendSection() {
     labels,
     datasets: [
       {
-        label: 'Cardio',
-        data: percentageData.map(d => d.cardio),
-        backgroundColor: CHART_COLORS.cardio,
+        label: 'running',
+        data: percentageData.map(d => d.running),
+        backgroundColor: CHART_COLORS.running,
       },
       {
-        label: 'Strength',
-        data: percentageData.map(d => d.strength),
-        backgroundColor: CHART_COLORS.strength,
+        label: 'cycling',
+        data: percentageData.map(d => d.cycling),
+        backgroundColor: CHART_COLORS.cycling,
       },
       {
-        label: 'Yoga',
-        data: percentageData.map(d => d.yoga),
-        backgroundColor: CHART_COLORS.yoga,
+        label: 'stretching',
+        data: percentageData.map(d => d.stretching),
+        backgroundColor: CHART_COLORS.stretching,
       },
     ],
   }
@@ -47,24 +47,24 @@ export function WorkoutTrendSection() {
     labels,
     datasets: [
       {
-        label: 'Cardio',
-        data: percentageData.map(d => d.cardio),
-        backgroundColor: `${CHART_COLORS.cardio}80`,
-        borderColor: CHART_COLORS.cardio,
+        label: 'running',
+        data: percentageData.map(d => d.running),
+        backgroundColor: `${CHART_COLORS.running}80`,
+        borderColor: CHART_COLORS.running,
         fill: true,
       },
       {
-        label: 'Strength',
-        data: percentageData.map(d => d.strength),
-        backgroundColor: `${CHART_COLORS.strength}80`,
-        borderColor: CHART_COLORS.strength,
+        label: 'cycling',
+        data: percentageData.map(d => d.cycling),
+        backgroundColor: `${CHART_COLORS.cycling}80`,
+        borderColor: CHART_COLORS.cycling,
         fill: true,
       },
       {
-        label: 'Yoga',
-        data: percentageData.map(d => d.yoga),
-        backgroundColor: `${CHART_COLORS.yoga}80`,
-        borderColor: CHART_COLORS.yoga,
+        label: 'stretching',
+        data: percentageData.map(d => d.stretching),
+        backgroundColor: `${CHART_COLORS.stretching}80`,
+        borderColor: CHART_COLORS.stretching,
         fill: true,
       },
     ],

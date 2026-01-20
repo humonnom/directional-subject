@@ -28,8 +28,8 @@ export default function DashboardPage() {
         <div className="space-y-8">
           <CoffeeBrandsSection/>
           <SnackBrandsSection />
-          {/*<MoodTrendSection />*/}
-          {/*<WorkoutTrendSection />*/}
+          <MoodTrendSection />
+          <WorkoutTrendSection />
           {/*<CoffeeConsumptionSection />*/}
           {/*<SnackImpactSection />*/}
         </div>

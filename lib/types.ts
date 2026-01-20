@@ -118,9 +118,9 @@ export type TopCoffeeBrandsResponse = TopCoffeeBrandItem[]
 // Weekly Workout Trend
 export interface WeeklyWorkoutItem {
   week: string
-  cardio: number
-  strength: number
-  yoga: number
+  stretching: number
+  cycling: number
+  running: number
 }
 
 export type WeeklyWorkoutTrendResponse = WeeklyWorkoutItem[];

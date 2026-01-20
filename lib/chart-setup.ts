@@ -34,9 +34,9 @@ export const CHART_COLORS = {
   tired: '#ef4444',
   
   // Workout colors
-  cardio: '#3b82f6',
-  strength: '#f97316',
-  yoga: '#a855f7',
+  running: '#3b82f6',
+  cycling: '#f97316',
+  stretching: '#a855f7',
   
   // Team colors
   FE: '#3b82f6',

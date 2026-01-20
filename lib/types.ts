@@ -110,13 +110,10 @@ export type PopularSnackBrandsResponse = PopularSnackBrandItem[];
 // Top Coffee Brands
 export interface TopCoffeeBrandItem {
   brand: string
-  count: number
+  popularity: number
 }
 
-export interface TopCoffeeBrandsResponse {
-  items: TopCoffeeBrandItem[]
-  total: number
-}
+export type TopCoffeeBrandsResponse = TopCoffeeBrandItem[]
 
 // Weekly Workout Trend
 export interface WeeklyWorkoutItem {

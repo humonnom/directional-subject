@@ -9,6 +9,7 @@ import { SnackBrandsSection } from '@/components/dashboard/sections/snack-brands
 import { WorkoutTrendSection } from '@/components/dashboard/sections/workout-trend-section'
 import { CoffeeConsumptionSection } from '@/components/dashboard/sections/coffee-consumption-section'
 import { SnackImpactSection } from '@/components/dashboard/sections/snack-impact-section'
+import { CoffeeBrandsSection } from '@/components/dashboard/sections/coffee-brands-section'
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -25,7 +26,7 @@ export default function DashboardPage() {
       <main className="mx-auto max-w-7xl px-4 py-6">
         <h1 className="mb-6 text-2xl font-bold">Data Visualization Dashboard</h1>
         <div className="space-y-8">
-          {/*<TopCoffeeBrandsSection/>*/}
+          <CoffeeBrandsSection/>
           <SnackBrandsSection />
           {/*<MoodTrendSection />*/}
           {/*<WorkoutTrendSection />*/}

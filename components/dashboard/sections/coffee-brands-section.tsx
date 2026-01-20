@@ -1,17 +1,17 @@
 'use client'
 
 import useSWR from 'swr'
-import { getPopularSnackBrands } from '@/lib/api'
+import { getPopularSnackBrands, getTopCoffeeBrands } from '@/lib/api'
 import { BRAND_COLORS } from '@/lib/chart-setup'
 import { ChartCard } from '../chart-card'
 import { BarChart } from '../charts/bar-chart'
 import { DoughnutChart } from '../charts/doughnut-chart'
 
-export function SnackBrandsSection() {
-  const { data, error, isLoading } = useSWR('popular-snack-brands', getPopularSnackBrands)
+export function CoffeeBrandsSection() {
+  const { data, error, isLoading } = useSWR('top-coffee-brands', getTopCoffeeBrands)
 
-  const labels = data?.map(item => item.name) ?? []
-  const counts = data?.map(item => item.share) ?? []
+  const labels = data?.map(item => item.brand) ?? []
+  const counts = data?.map(item => item.popularity) ?? []
 
   const barChartData = {
     labels,
